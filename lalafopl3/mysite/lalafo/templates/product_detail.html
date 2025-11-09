@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ product.product_name }}</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        img {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        h1 {
+            color: #764ba2;
+            margin-bottom: 10px;
+        }
+        p {
+            line-height: 1.6;
+        }
+        .price {
+            font-size: 1.8em;
+            color: #f5576c;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        .buttons {
+            margin-top: 30px;
+            display: flex;
+            gap: 15px;
+        }
+        .btn {
+            text-decoration: none;
+            padding: 12px 25px;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        .btn-back {
+            background: #e9ecef;
+            color: #333;
+        }
+        .btn-back:hover {
+            background: #dee2e6;
+        }
+        .btn-edit {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .btn-delete {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        {% if product.image %}
+            <img src="{{ product.image.url }}" alt="{{ product.product_name }}">
+        {% endif %}
+
+        <h1>{{ product.product_name }}</h1>
+        <p><strong>Описание:</strong> {{ product.description }}</p>
+        <p><strong>Телефон:</strong> {{ product.phone_number }}</p>
+        <p><strong>Состояние:</strong>
+            {% if product.product_type %}
+                Новый
+            {% else %}
+                Б/у
+            {% endif %}
+        </p>
+        <p><strong>Дата создания:</strong> {{ product.create_date|date:"d.m.Y H:i" }}</p>
+
+        <div class="price">{{ product.price }} сом</div>
+
+        <div class="buttons">
+            <a href="{% url 'product_list' %}" class="btn btn-back">← Назад</a>
+            <a href="{% url 'product_update' product.pk %}" class="btn btn-edit">✏️ Изменить</a>
+            <a href="{% url 'product_delete' product.pk %}" class="btn btn-delete">🗑️ Удалить</a>
+        </div>
+    </div>
+</body>
+</html>
